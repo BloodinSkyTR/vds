@@ -1,3 +1,4 @@
+del setup
 mkdir setup
 copy vds.psm1 setup
 mkdir setup\compile

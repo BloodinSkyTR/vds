@@ -1,7 +1,7 @@
 $path = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $path
 [Environment]::CurrentDirectory = $path
-import-module ..\vds.psm1
+#import-module ..\vds.psm1
 
 $ErrorActionPreference = "SilentlyContinue"
 $global:findregtabs = 0..100
