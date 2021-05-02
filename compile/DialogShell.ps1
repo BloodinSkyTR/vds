@@ -1,7 +1,6 @@
 $path = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $path
 [Environment]::CurrentDirectory = $path
-import-module ..\vds.psm1
 $host.ui.RawUI.Backgroundcolor = 1
 cls
 console "DialogShell $(sysinfo dsver)"
