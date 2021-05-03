@@ -10,9 +10,13 @@ $MyForm.icon = "$(regread "HKLM:\Software\Microsoft\Windows\CurrentVersion\Unins
                 dialog property $TextBox1 Scrollbars "none" 
                 dialog property $TextBox1 acceptstab "" 
                 dialog property $TextBox1 acceptsreturn ""  
-        $TextBox2 = dialog add $MyForm TextBox 50 20 250 20 
+        $TextBox2 = dialog add $MyForm TextBox 50 20 325 20 
         dialog settip $textbox2 "Outputfile"
-        $Button2 = dialog add $MyForm Button 50 275 75 20 "Browse"      
+      <#  $Button2 = dialog add $MyForm Button 50 275 75 20 "Browse" 
+        $button2.add_Click({$in = $(savedlg 'Windows Command Script|*.cmd')
+        dialog set $textbox2 $in
+        })
+		#>
                 dialog property $TextBox2 Multiline "" 
                 dialog property $TextBox2 Maxlength "0" 
                 dialog property $TextBox2 Wordwrap "true" 
@@ -99,13 +103,21 @@ $MyForm.icon = "$(regread "HKLM:\Software\Microsoft\Windows\CurrentVersion\Unins
         $CheckBox5 = dialog add $MyForm CheckBox 75 16 335 20 "No Console" 
                 dialog property $CheckBox5 Appearance "Normal" 
                 dialog property $CheckBox5 Threestate ""  <#
-        $CheckBox6 = dialog add $MyForm CheckBox 100 16 335 20 "Require Admin"#>
+        $CheckBox6 = dialog add $MyForm CheckBox 100 16 335 20 "Require Admin"
+		dialog property $CheckBox6 appearance "Button"
+		dialog property $CheckBox6 textalign "MiddleCenter"
+		
+		        $button3.add_Click({$in = $(filedlg 'Icon|*.ico')
+        dialog set $textbox3 $in
+        })
+		#>
                 $Button4 = dialog add $MyForm Button 100 16 335 20 "Load .pil"
                 $Button5 = dialog add $MyForm Button 125 16 335 20 "Save .pil"      
                 $Button6 = dialog add $MyForm Button 150 16 335 20 "Create Package" 
-        dialog property $CheckBox6 appearance "Button"
+				$MyForm.AcceptButton = $Button6
+        
 		dialog property $CheckBox5 appearance "Button"
-        dialog property $CheckBox6 textalign "MiddleCenter"
+        
 		dialog property $CheckBox5 textalign "MiddleCenter"
         if ($args[0])
         {
@@ -133,13 +145,10 @@ if ($args[1])
         
         $button1.add_Click({$in = $(filedlg 'DialogShell|*.ds1')
         dialog set $textbox1 $in
+		dialog set $textbox2 "$(path $($in))\$(name $($in)).cmd"
         })
-        $button2.add_Click({$in = $(savedlg 'Windows Command Script|*.cmd')
-        dialog set $textbox2 $in
-        })
-        $button3.add_Click({$in = $(filedlg 'Icon|*.ico')
-        dialog set $textbox3 $in
-        })
+
+
         
         $button4.add_Click({
         $pil = $(filedlg 'Pil Files|*.pil')
