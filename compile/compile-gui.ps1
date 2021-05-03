@@ -1,5 +1,5 @@
 directory change "$(regread "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\DialogShell\" "InstallLocation")\compile"
-$MyForm = dialog create "Script Packager" 0 0 389 195
+$MyForm = dialog create "Script Packager" 0 0 389 225
 $MyForm.icon = "$(regread "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\DialogShell\" "InstallLocation")\res\compile.ico"
     $TextBox1 = dialog add $MyForm TextBox 25 20 250 20 
     dialog settip $textbox1 "Inputfile" 
@@ -95,16 +95,18 @@ $MyForm.icon = "$(regread "HKLM:\Software\Microsoft\Windows\CurrentVersion\Unins
                 dialog property $CheckBox3 Threestate ""  
         $CheckBox4 = dialog add $MyForm CheckBox 175 135 100 20 "-mta" 
                 dialog property $CheckBox4 Appearance "Normal" 
-                dialog property $CheckBox4 Threestate ""  
-        $CheckBox5 = dialog add $MyForm CheckBox 175 250 100 20 "No Console" 
+                dialog property $CheckBox4 Threestate ""  #>
+        $CheckBox5 = dialog add $MyForm CheckBox 75 16 335 20 "No Console" 
                 dialog property $CheckBox5 Appearance "Normal" 
-                dialog property $CheckBox5 Threestate ""  
+                dialog property $CheckBox5 Threestate ""  <#
         $CheckBox6 = dialog add $MyForm CheckBox 100 16 335 20 "Require Admin"#>
-                $Button4 = dialog add $MyForm Button 75 16 335 20 "Load .pil"
-                $Button5 = dialog add $MyForm Button 100 16 335 20 "Save .pil"      
-                $Button6 = dialog add $MyForm Button 125 16 335 20 "Create Package" 
+                $Button4 = dialog add $MyForm Button 100 16 335 20 "Load .pil"
+                $Button5 = dialog add $MyForm Button 125 16 335 20 "Save .pil"      
+                $Button6 = dialog add $MyForm Button 150 16 335 20 "Create Package" 
         dialog property $CheckBox6 appearance "Button"
+		dialog property $CheckBox5 appearance "Button"
         dialog property $CheckBox6 textalign "MiddleCenter"
+		dialog property $CheckBox5 textalign "MiddleCenter"
         if ($args[0])
         {
                 inifile open $args[0]
@@ -189,7 +191,13 @@ if ($args[1])
 $ctf1 = Get-Content -Path ([Environment]::GetFolderPath("ProgramFiles")+"\WindowsPowerShell\Modules\vds\vds.psm1") -Encoding UTF8 -ErrorAction SilentlyContinue
 $ctf2 = Get-Content -Path $textbox1.text -Encoding UTF8 -ErrorAction SilentlyContinue
 
-$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(name $($textbox2.text)).cmd$(cr)$(lf)powershell -ep bypass -w h iex(get-content .\$(name $($textbox2.text)).cmd ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"
+if ($checkbox5.checked -eq $true){
+	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(name $($textbox2.text)).cmd$(cr)$(lf)powershell -ep bypass -w h iex(get-content .\$(name $($textbox2.text)).cmd ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"
+	
+	}
+else{
+	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(name $($textbox2.text)).cmd$(cr)$(lf)powershell -ep bypass iex(get-content .\$(name $($textbox2.text)).cmd ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"	
+}
 
 $footer = "}$(cr)$(lf)$(chr 36)repvds = Get-Content .\$(name $($textbox2.text)).cmd | Select-Object -SkipLast 1 $(cr)$(lf)$(chr 36)repvds | out-file .\$(name $($textbox2.text)).cmd -enc ascii$(cr)$(lf)"
 
