@@ -201,11 +201,37 @@ $ctf1 = Get-Content -Path ([Environment]::GetFolderPath("ProgramFiles")+"\Window
 $ctf2 = Get-Content -Path $textbox1.text -Encoding UTF8 -ErrorAction SilentlyContinue
 
 if ($checkbox5.checked -eq $true){
-	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(chr 34)$(name $($textbox2.text)).cmd$(chr 34)$(cr)$(lf)powershell -ep bypass -w h iex(get-content $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"
+	$header = "IF [%1]==[] (set file1=$(chr 36)null) ELSE (set file1=$(chr 34)%1$(chr 34))
+IF [%2]==[] (set file2=$(chr 36)null) ELSE (set file2=$(chr 34)%2$(chr 34))
+IF [%3]==[] (set file3=$(chr 36)null) ELSE (set file3=$(chr 34)%3$(chr 34))
+IF [%4]==[] (set file4=$(chr 36)null) ELSE (set file4=$(chr 34)%4$(chr 34))
+IF [%5]==[] (set file5=$(chr 36)null) ELSE (set file5=$(chr 34)%5$(chr 34))
+IF [%6]==[] (set file6=$(chr 36)null) ELSE (set file6=$(chr 34)%6$(chr 34))
+IF [%7]==[] (set file7=$(chr 36)null) ELSE (set file7=$(chr 34)%7$(chr 34))
+IF [%8]==[] (set file8=$(chr 36)null) ELSE (set file8=$(chr 34)%8$(chr 34))
+IF [%9]==[] (set file9=$(chr 36)null) ELSE (set file9=$(chr 34)%9$(chr 34)) 
+echo $(chr 36)global:1 = %file1%; $(chr 36)global:2 = %file2%; $(chr 36)global:3 = %file3%; $(chr 36)global:4 = %file4%; $(chr 36)global:5 = %file5%; $(chr 36)global:6 = %file6%; $(chr 36)global:7 = %file7%; $(chr 36)global:8 = %file8%; $(chr 36)global:9 = %file9%;vds>> vds-ide.cmd
+powershell -ep bypass -w h iex(get-content .\vds-ide.cmd ^| select -skip 12 ^| out-string)
+exit
+
+function vds{"
 	
 	}
 else{
-	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(chr 34)$(name $($textbox2.text)).cmd$(chr 34)$(cr)$(lf)powershell -ep bypass iex(get-content $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"	
+		$header = "IF [%1]==[] (set file1=$(chr 36)null) ELSE (set file1=$(chr 34)%1$(chr 34))
+IF [%2]==[] (set file2=$(chr 36)null) ELSE (set file2=$(chr 34)%2$(chr 34))
+IF [%3]==[] (set file3=$(chr 36)null) ELSE (set file3=$(chr 34)%3$(chr 34))
+IF [%4]==[] (set file4=$(chr 36)null) ELSE (set file4=$(chr 34)%4$(chr 34))
+IF [%5]==[] (set file5=$(chr 36)null) ELSE (set file5=$(chr 34)%5$(chr 34))
+IF [%6]==[] (set file6=$(chr 36)null) ELSE (set file6=$(chr 34)%6$(chr 34))
+IF [%7]==[] (set file7=$(chr 36)null) ELSE (set file7=$(chr 34)%7$(chr 34))
+IF [%8]==[] (set file8=$(chr 36)null) ELSE (set file8=$(chr 34)%8$(chr 34))
+IF [%9]==[] (set file9=$(chr 36)null) ELSE (set file9=$(chr 34)%9$(chr 34)) 
+echo $(chr 36)global:1 = %file1%; $(chr 36)global:2 = %file2%; $(chr 36)global:3 = %file3%; $(chr 36)global:4 = %file4%; $(chr 36)global:5 = %file5%; $(chr 36)global:6 = %file6%; $(chr 36)global:7 = %file7%; $(chr 36)global:8 = %file8%; $(chr 36)global:9 = %file9%;vds>> vds-ide.cmd
+powershell -ep bypass iex(get-content .\vds-ide.cmd ^| select -skip 12 ^| out-string)
+exit
+
+function vds{"
 }
 
 $footer = "}$(cr)$(lf)$(chr 36)repvds = Get-Content $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) | Select-Object -SkipLast 1 $(cr)$(lf)$(chr 36)repvds | out-file $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) -enc ascii$(cr)$(lf)"
