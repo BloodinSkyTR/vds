@@ -201,14 +201,14 @@ $ctf1 = Get-Content -Path ([Environment]::GetFolderPath("ProgramFiles")+"\Window
 $ctf2 = Get-Content -Path $textbox1.text -Encoding UTF8 -ErrorAction SilentlyContinue
 
 if ($checkbox5.checked -eq $true){
-	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(name $($textbox2.text)).cmd$(cr)$(lf)powershell -ep bypass -w h iex(get-content .\$(name $($textbox2.text)).cmd ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"
+	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $chr(34)$(name $($textbox2.text)).cmd$(chr 34)$(cr)$(lf)powershell -ep bypass -w h iex(get-content $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"
 	
 	}
 else{
-	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(name $($textbox2.text)).cmd$(cr)$(lf)powershell -ep bypass iex(get-content .\$(name $($textbox2.text)).cmd ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"	
+	$header = "echo $(chr 36)global:1 = $(chr 34)%1$(chr 34); $(chr 36)global:2 = $(chr 34)%2$(chr 34); $(chr 36)global:3 = $(chr 34)%3$(chr 34); $(chr 36)global:4 = $(chr 34)%4$(chr 34); $(chr 36)global:5 = $(chr 34)%5$(chr 34); $(chr 36)global:6 = $(chr 34)%6$(chr 34); $(chr 36)global:7 = $(chr 34)%7$(chr 34); $(chr 36)global:8 = $(chr 34)%8$(chr 34); $(chr 36)global:9 = $(chr 34)%9$(chr 34);vds>> $(chr 34)$(name $($textbox2.text)).cmd$(chr 34)$(cr)$(lf)powershell -ep bypass iex(get-content $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) ^| select -skip 3 ^| out-string)$(cr)$(lf)exit$(cr)$(lf)$(cr)$(lf)function vds{$(cr)$(lf)"	
 }
 
-$footer = "}$(cr)$(lf)$(chr 36)repvds = Get-Content .\$(name $($textbox2.text)).cmd | Select-Object -SkipLast 1 $(cr)$(lf)$(chr 36)repvds | out-file .\$(name $($textbox2.text)).cmd -enc ascii$(cr)$(lf)"
+$footer = "}$(cr)$(lf)$(chr 36)repvds = Get-Content $(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) | Select-Object -SkipLast 1 $(cr)$(lf)$(chr 36)repvds | out-file ($(chr 39).\$(name $($textbox2.text)).cmd$(chr 39) -enc ascii$(cr)$(lf)"
 
 Remove-Item -path $textbox2.text -force
 Add-Content $textbox2.text $header -enc ascii
