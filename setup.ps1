@@ -142,7 +142,7 @@ $MyForm.icon = "$(curdir)\setup\res\cog_go.ico"}
                     registry newkey "HKLM:\Software\Classes\DialogShell.Script\" "Shell"
                     registry newkey "HKLM:\Software\Classes\DialogShell.Script\Shell\" "Open"
                     registry newkey "HKLM:\Software\Classes\DialogShell.Script\Shell\Open\" "Command"
-                    registry newitem "HKLM:\Software\Classes\DialogShell.Script\Shell\Open\Command" "(Default)" String "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -ep bypass -sta iex(get-content $(chr 34)%1$(chr 34) | out-string)"
+                    registry newitem "HKLM:\Software\Classes\DialogShell.Script\Shell\Open\Command" "(Default)" String "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -ep bypass -sta iex(get-content $(chr 39)%1$(chr 39) | out-string)"
 					registry newkey "HKLM:\Software\Classes\DialogShell.Script\Shell\" "Edit"
                     registry newkey "HKLM:\Software\Classes\DialogShell.Script\Shell\Edit\" "Command"
                     registry newitem "HKLM:\Software\Classes\DialogShell.Script\Shell\Edit\Command" "(Default)" String "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -ep bypass -sta -file $(chr 34)$(string $Label2.Text)\examples\vds-ide.ps1$(chr 34) $(chr 34)%1$(chr 34)"
